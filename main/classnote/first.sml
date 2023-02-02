@@ -26,3 +26,5 @@ val abs_of_z = if z<0 then 0-z else z;
     static environment: z<0: bool, 0-z and z need the same type: int, 
     dynamic environment: ..., abs_of_z-->70
 *)
+
+val abs_of_z_simpler = abs z
