@@ -28,3 +28,15 @@ val abs_of_z = if z<0 then 0-z else z;
 *)
 
 val abs_of_z_simpler = abs z
+
+(* 
+    Addition
+    1. Sytax: 
+        e1 + e2 where e1 and e2 are expressions
+    2. Type-checking:
+        if e1 and e2 has type int,
+        then e1 + e2 has type int
+    3. Evaluation: 
+        if e1 evaluates to v1 and e2 evaluates to v2,
+        then e1 + e2 evaluates to sum of v1 and v2
+*)
