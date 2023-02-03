@@ -40,7 +40,6 @@ val abs_of_z_simpler = abs z
         if e1 evaluates to v1 and e2 evaluates to v2,
         then e1 + e2 evaluates to sum of v1 and v2
 
-
     Conditional expression
     1. Syntax: 
         if e1 then e2 else e3 
@@ -56,4 +55,14 @@ val abs_of_z_simpler = abs z
             evaluate e2 and that result is the whole expression's result
         else
             evaluate e3 and that result is the whole expression's result
+
+    Less-than
+    1. Syntax: 
+        e1 < e2 where e1 and e2 are sub expression
+    2. Type-checking:
+        check e1 and e2 has the same type and the type need be comparable
+        then e1 < e2 has type bool
+    3. Evaluation: 
+        if e1 evaluates to v1 and e2 evaluates to v2,
+        then e1 < e2 evaluates v1 < v2
 *)
