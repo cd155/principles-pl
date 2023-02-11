@@ -5,6 +5,8 @@
 
 
 val test1 = is_older ((1,2,3),(2,3,4)) = true
+val test1' = is_older ((1,2,3),(1,3,2)) = true
+val test1' = is_older ((2,2,3),(2,1,4)) = false
 
 val test2 = number_in_month ([(2012,2,28),(2013,12,1)],2) = 1
 
