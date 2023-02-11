@@ -38,9 +38,12 @@ fun is_older'' (date1: int*int*int, date2: int*int*int) =
         val xs = [year, month, date]
 
         fun is_older_Helper (xs: (int*int) list) =
-            if #1 (hd xs) = #2 (hd xs) 
-            then true andalso is_older_Helper (tl xs)
-            else #1 (hd xs) < #2 (hd xs)
+            if null xs 
+            then false
+            else
+                if #1 (hd xs) = #2 (hd xs) 
+                then true andalso is_older_Helper (tl xs)
+                else #1 (hd xs) < #2 (hd xs)
     in
         is_older_Helper xs
     end
