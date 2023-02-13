@@ -154,8 +154,18 @@ fun number_before_reaching_sum (sum: int, xs: int list) =
     let
         fun number_before_reaching_sum_helper (sum: int, acc:int, last:int, ys: int list) =
             if (acc+hd ys) >= sum
-            then last
-            else number_before_reaching_sum_helper (sum, (acc+hd ys), hd ys, tl ys)
+            then last-1
+            else number_before_reaching_sum_helper (sum, (acc+hd ys), last+1, tl ys)
     in
-        number_before_reaching_sum_helper (sum, 0, hd xs, xs)
+        number_before_reaching_sum_helper (sum, 0, 1, xs)
     end
+
+(* 
+    Write a function what_month that takes a day of year (i.e., an int between 
+    1 and 365) and returns what month that day is in (1 for January, 2 for 
+    February, etc.). Use a list holding 12 integers and your answer to the 
+    previous problem.
+*)
+val month_days = [31,28,31,30,31,30,31,31,30,31,30,31]
+fun what_month (day: int) = 
+    number_before_reaching_sum (day, month_days) + 1
