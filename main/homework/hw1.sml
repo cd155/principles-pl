@@ -112,15 +112,15 @@ fun dates_in_months (dates: (int*int*int) list, month: int list) =
     function may apply hd or tl to the empty list in this case, which is 
     okay.
 *)
-fun get_nth (chars: string list, n: int) = 
+fun get_nth (xs: string list, n: int) = 
     let
         (* xs can not be empty *)
-        fun get_nth_helper (xs: string list, n: int, i: int) = 
+        fun get_nth_helper (ys: string list, n: int, i: int) = 
             if n = i 
-            then hd xs
-            else get_nth_helper (tl xs, n, i+1)
+            then hd ys
+            else get_nth_helper (tl ys, n, i+1)
     in
-        get_nth_helper (chars, n, 1)
+        get_nth_helper (xs, n, 1)
     end
 
 (* 
@@ -133,4 +133,10 @@ fun get_nth (chars: string list, n: int) =
     use capitalized English month names: January, February, March, April, May, 
     June, July, August, September, October, November, December.
 *)
+val months = ["January", "February", "March", "April", "May", "June", 
+    "July", "August", "September", "October", "November", "December"]
 
+fun date_to_string (date: int*int*int) = 
+    get_nth (months, #2 date) ^ " " ^
+    Int.toString (#3 date) ^ ", " ^
+    Int.toString (#1 date) 
