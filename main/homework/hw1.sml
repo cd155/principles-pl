@@ -206,3 +206,10 @@ fun oldest (dates: (int*int*int) list) =
         in
             oldest_helper (dates, hd dates)
         end
+
+(* 
+    Write functions number_in_months_challenge and dates_in_months_challenge 
+    that are like your solutions to problems 3 and 5 except having a month in 
+    the second argument multiple times has no more effect than having it once. 
+    (Hint: Remove duplicates, then use previous work.)
+*)
