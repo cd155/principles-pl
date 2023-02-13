@@ -77,3 +77,38 @@ fun number_in_months (dates: (int*int*int) list, month: int list) =
     if null month
     then 0
     else number_in_month (dates, hd month) + number_in_months (dates, tl month)
+
+(* 
+    Write a function dates_in_month that takes a list of dates and a month 
+    (i.e., an int) and returns a list holding the dates from the argument 
+    list of dates that are in the month. The returned list should contain 
+    dates in the order they were originally given.
+*)
+fun dates_in_month (dates: (int*int*int) list, month: int) =
+    if null dates
+    then []
+    else 
+        if #2 (hd dates) = month
+        then hd dates :: dates_in_month (tl dates, month)
+        else dates_in_month (tl dates, month)
+
+(* 
+    Write a function dates_in_months that takes a list of dates and a list 
+    of months (i.e., an int list) and returns a list holding the dates from 
+    the argument list of dates that are in any of the months in the list of 
+    months. Assume the list of months has no number repeated. 
+    Hint: Use your answer to the previous problem and 
+          SML’s list-append operator (@).
+*)
+fun dates_in_months (dates: (int*int*int) list, month: int list) =
+    if null month
+    then []
+    else dates_in_month (dates, hd month) @ dates_in_months (dates, tl month)
+
+(* 
+    Write a function get_nth that takes a list of strings and an int n and 
+    returns the nth element of the list where the head of the list is 1st. 
+    Do not worry about the case where the list has too few elements: your 
+    function may apply hd or tl to the empty list in this case, which is 
+    okay.
+*)
