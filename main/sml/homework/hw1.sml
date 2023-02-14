@@ -200,7 +200,7 @@ fun oldest (dates: (int*int*int) list) =
                     then SOME (hd dates)
                     else SOME date
                 else
-                    if is_older (hd dates, hd (tl dates))
+                    if is_older (hd dates, date)
                     then oldest_helper (tl dates, hd dates)
                     else oldest_helper (tl dates, date)
         in
