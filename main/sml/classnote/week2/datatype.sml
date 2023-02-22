@@ -90,3 +90,9 @@ fun num_leaves tr =
     case tr of
           Leaf i => 1
         | Node(i, lft, rgt) => num_leaves lft + num_leaves rgt
+
+fun fun_name {first=x, middle=y, last=z} =
+    x ^ "" ^ y ^ "" ^ z
+
+fun sum_triple (x,y,z) =
+    x + y + z
