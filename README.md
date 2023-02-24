@@ -5,3 +5,6 @@ The purpose of this repo is for the practice of class - [Programming Languages](
 The course is provide by Prof.[Dan Grossman](https://homes.cs.washington.edu/~djg/), and implement languages various on ML, Racket and Ruby.
 
 The **standard** homework solutions will **not** be added in this repo, so other programmers can really learn the knowledge from this class.
+
+Note:
+rlwrap sml 
