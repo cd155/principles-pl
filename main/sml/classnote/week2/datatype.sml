@@ -96,3 +96,27 @@ fun fun_name {first=x, middle=y, last=z} =
 
 fun sum_triple (x,y,z) =
     x + y + z
+
+fun fun_name2 (r: {first:string, middle:string, last:string}) =
+    #first r ^ " " ^ #middle r ^ " " ^ #last r
+
+(* 
+    the following version will not type-check without type annotations
+    because the type-checker cannot figure out if there might be other
+    field. In other words, the type-checker not sure if there will be 3 int
+    tuple or more.
+
+    fun sum_triple2 triple = 
+        #1 triple + #2 triple + #3 triple 
+*)
+
+(*
+    int * 'a * int -> int
+
+    it is a polymorphic function which y can be any type
+*)
+fun partial_sum (x, y, z) = 
+    x + z
+
+fun partial_name {first=x, middle=y, last=z} =
+    x ^ "" ^ z
