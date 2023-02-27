@@ -23,6 +23,12 @@ fun eval e =
         | Add (e1, e2)      => (eval e1) + (eval e2)
         | Multiply (e1, e2) => (eval e1) * (eval e2)
 
+(* other version *)
+fun eval' (Constant i) = i
+  | eval' (Negate e2) = ~ (eval' e2)
+  | eval' (Add(e1,e2)) = (eval' e1) + (eval' e2)
+  | eval' (Multiply(e1,e2)) = (eval' e1) + (eval' e2)
+
 (* Add (Constant (10+9), Negate (Constant 4)) *)
 
 fun max_constant e = 
@@ -128,3 +134,7 @@ fun same_thing (x, y) =
 (* int -> string *)
 fun is_three x =
     if x=3 then "yes" else "no"
+
+fun append ([],ys) = ys
+  | append (x::xs',ys) = x :: append(xs', ys)
+  
