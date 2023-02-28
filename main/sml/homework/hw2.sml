@@ -46,6 +46,19 @@ fun get_substitutions2_aux(sllst: string list list, s: string, acc:string list) 
 fun get_substitutions2(sllst: string list list, s: string ) =
     get_substitutions2_aux(sllst, s, [])
 
+fun similar_names(sllst: string list list, 
+                  {first=f_name,middle=m_name,last=l_name}) =
+    
+    let val names = get_substitutions1(sllst, f_name)
+        fun similar_names_aux(names: string list) =
+            case names of
+                  [] => []
+                | x::xs => 
+                    {first=x, middle=m_name,last=l_name}::(similar_names_aux xs)
+    in 
+       {first=f_name,middle=m_name,last=l_name}::similar_names_aux names
+    end
+
 (* you may assume that Num is always used with values 2, 3, ..., 10
    though it will not really come up *)
 datatype suit = Clubs | Diamonds | Hearts | Spades
