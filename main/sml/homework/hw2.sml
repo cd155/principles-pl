@@ -28,9 +28,23 @@ fun get_substitutions1(sllst: string list list, s: string ) =
             let val res = all_except_option(s, lx)
             in
                 case res of
-                      NONE => [] @ get_substitutions1(lxs, s)
+                      NONE => get_substitutions1(lxs, s)
                     | SOME n => n @ get_substitutions1(lxs, s)
             end
+
+fun get_substitutions2_aux(sllst: string list list, s: string, acc:string list) =
+    case sllst of
+          [] => acc
+        | lx::lxs => 
+            let val res = all_except_option(s, lx)
+            in
+                case res of
+                      NONE => get_substitutions2_aux(lxs, s, acc)
+                    | SOME n => get_substitutions2_aux(lxs, s, (acc @ n))
+            end
+
+fun get_substitutions2(sllst: string list list, s: string ) =
+    get_substitutions2_aux(sllst, s, [])
 
 (* you may assume that Num is always used with values 2, 3, ..., 10
    though it will not really come up *)
