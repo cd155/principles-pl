@@ -18,7 +18,7 @@ fun nondecreasing xs =
     case xs of
         [] => true
         | _::[] => true
-        | head::(neck::rest) => head <= neck andalso nondecreasing (neck::rest)
+        | head::(neck::rest) => (head <= neck) andalso nondecreasing (neck::rest)
 
 datatype sgn = P | N | Z
 fun multsign (x1,x2) =
