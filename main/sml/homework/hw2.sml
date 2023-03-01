@@ -179,10 +179,9 @@ fun possible_zero_move(c: card, hcs: card list, g:int) =
 fun careful_player_aux(cs: card list, hcs: card list, g: int) =
     case (cs,hcs) of 
           ([],_) => []
-        | ((x::_),[]) => Draw::(careful_player_aux(cs,(x::hcs),g))
+        | ((x::xs),[]) => Draw::(careful_player_aux(xs,(x::hcs),g))
         | ((x::xs),(y::ys)) =>
             let val pc = possible_zero_move(x,hcs,g)
-                val removed_cs = remove_card(hcs, valOf pc, IllegalMove)
             in 
                 if score(hcs,g) <= g
                 then
@@ -191,7 +190,11 @@ fun careful_player_aux(cs: card list, hcs: card list, g: int) =
                     else if score(hcs,g) = 0
                     then []
                     else if (isSome pc)
-                    then Draw::(Discard (valOf pc))::(careful_player_aux(xs,removed_cs,g))
+                    then 
+                        let val removed_cs = remove_card(hcs, valOf pc, IllegalMove)
+                        in
+                            Draw::(Discard (valOf pc))::(careful_player_aux(xs,removed_cs,g))
+                        end
                     else 
                         (Discard y)::(careful_player_aux(cs,tl hcs,g))
                 else []
