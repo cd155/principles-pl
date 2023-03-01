@@ -141,3 +141,27 @@ fun officiate_aux(cs: card list, ms: move list, hcs: card list, g: int) =
 
 fun officiate(cs: card list, ms: move list, g: int) = 
     officiate_aux(cs, ms, [], g)
+
+fun card_value'(mycard: card) =
+    case mycard of
+          (_, Ace) => 1
+        | (_, Num n) => n
+        | (_,_) => 10
+
+fun sum_cards'(cs: card list) =
+    case cs of 
+        [] => 0
+        | (x::xs) => card_value'(x) + sum_cards'(xs)
+
+(* c - a *)
+fun score_challenge'(cs: card list, g: int) =
+    let val res1 = sum_cards cs
+        val res2 = sum_cards' cs
+        val pre1 = if res1 > g then 3 * (res1 - g) else (g-res1)
+        val pre2 = if res2 > g then 3 * (res2 - g) else (g-res2)
+        fun min(x, y) = if x < y then x else y 
+    in
+        if all_same_color cs
+        then min(pre1 div 2, pre2 div 2)
+        else min(pre1, pre2)
+    end
