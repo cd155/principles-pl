@@ -98,3 +98,46 @@ fun remove_card(cs: card list, c: card, exn) =
             if x = c 
             then xs 
             else x::remove_card(xs, c, exn)
+
+(* 2 - d *)
+fun all_same_color(cs: card list) = 
+    case cs of 
+          [] => true
+        | [x] => true 
+        | (x1::x2::xs) => 
+            if (card_color(x1) = card_color(x2)) 
+            then true andalso all_same_color(x2::xs)
+            else false
+
+(* 2 - e *)
+fun sum_cards(cs: card list) =
+    case cs of 
+        [] => 0
+        | (x::xs) => card_value(x) + sum_cards(xs)
+
+(* 2 - f *)
+fun score(cs: card list, g: int) = 
+    let val res = sum_cards cs
+    in
+        let val pre = if res > g then 3 * (res - g) else (g-res)
+        in
+            if all_same_color cs
+            then pre div 2
+            else pre
+        end
+    end
+
+(* 2 - g *)
+fun officiate_aux(cs: card list, ms: move list, hcs: card list, g: int) =
+    case (cs,ms) of
+          ([],_) => score(hcs,g)
+        | (_,[]) => score(hcs,g)
+        | ((x::xs),(Draw::ys)) =>
+            if (sum_cards(x::hcs) > g)
+            then score((x::hcs),g)
+            else officiate_aux(xs, ys, (x::hcs), g)
+        | (xs,((Discard c)::ys)) => 
+            officiate_aux (xs, ys, (remove_card(hcs, c, IllegalMove)), g)
+
+fun officiate(cs: card list, ms: move list, g: int) = 
+    officiate_aux(cs, ms, [], g)
