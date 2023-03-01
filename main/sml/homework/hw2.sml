@@ -165,3 +165,38 @@ fun score_challenge'(cs: card list, g: int) =
         then min(pre1 div 2, pre2 div 2)
         else min(pre1, pre2)
     end
+
+fun possible_zero_move_aux(c: card, hcs: card list, passed_cs: card list, g:int) =
+    case hcs of
+          [] => NONE
+        | (x::xs) => if (score(passed_cs@(c::xs), g)=0) 
+                     then SOME x
+                     else possible_zero_move_aux(c,xs,x::passed_cs,g)
+
+fun possible_zero_move(c: card, hcs: card list, g:int) =
+    possible_zero_move_aux(c,hcs,[],g)
+
+fun careful_player_aux(cs: card list, hcs: card list, g: int) =
+    case (cs,hcs) of 
+          ([],_) => []
+        | ((x::_),[]) => Draw::(careful_player_aux(cs,(x::hcs),g))
+        | ((x::xs),(y::ys)) =>
+            let val pc = possible_zero_move(x,hcs,g)
+                val removed_cs = remove_card(hcs, valOf pc, IllegalMove)
+            in 
+                if score(hcs,g) <= g
+                then
+                    if score(hcs,g) < (g-10)
+                    then Draw::(careful_player_aux(xs,(x::hcs),g))
+                    else if score(hcs,g) = 0
+                    then []
+                    else if (isSome pc)
+                    then Draw::(Discard (valOf pc))::(careful_player_aux(xs,removed_cs,g))
+                    else 
+                        (Discard y)::(careful_player_aux(cs,tl hcs,g))
+                else []
+            end
+
+(* c - b *)
+fun careful_player(cs: card list, g: int) = 
+    careful_player_aux(cs,[],g)
