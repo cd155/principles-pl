@@ -7,6 +7,7 @@ fun same_string(s1 : string, s2 : string) =
     s1 = s2
 
 (* put your solutions for problem 1 here *)
+(* 1 - a *)
 fun all_except_option(s1: string, slst: string list) =
     case slst of
           [] => NONE
@@ -21,6 +22,7 @@ fun all_except_option(s1: string, slst: string list) =
                         | SOME n => SOME (x::n)
                 end
 
+(* 1 - b *)
 fun get_substitutions1(sllst: string list list, s: string ) =
     case sllst of
           [] => []
@@ -43,9 +45,11 @@ fun get_substitutions2_aux(sllst: string list list, s: string, acc:string list) 
                     | SOME n => get_substitutions2_aux(lxs, s, (acc @ n))
             end
 
+(* 1 - c *)
 fun get_substitutions2(sllst: string list list, s: string ) =
     get_substitutions2_aux(sllst, s, [])
 
+(* 1 - d *)
 fun similar_names(sllst: string list list, 
                   {first=f_name,middle=m_name,last=l_name}) =
     
@@ -71,3 +75,26 @@ datatype move = Discard of card | Draw
 exception IllegalMove
 
 (* put your solutions for problem 2 here *)
+(* 2 - a *)
+fun card_color(mycard: card) =
+    case mycard of
+          (Clubs,_) => Black
+        | (Spades,_) => Black
+        | (Diamonds,_) => Red
+        | (Hearts,_) => Red
+
+(* 2 - b *)
+fun card_value(mycard: card) =
+    case mycard of
+          (_, Ace) => 11
+        | (_, Num n) => n
+        | (_,_) => 10
+
+(* 2 - c *)
+fun remove_card(cs: card list, c: card, exn) =
+    case cs of 
+          [] => raise exn
+        | (x::xs) => 
+            if x = c 
+            then xs 
+            else x::remove_card(xs, c, exn)
