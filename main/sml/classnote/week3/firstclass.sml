@@ -17,6 +17,7 @@ fun nth_tail_lame(n,xs) =
     then xs
     else tl(nth_tail_lame(n-1,xs))
 
+(* f(f(f(f...(x)))) *)
 fun n_times(f,n,x) =
     if n = 0
     then x
