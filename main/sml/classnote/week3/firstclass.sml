@@ -18,7 +18,7 @@ fun nth_tail_lame(n,xs) =
     else tl(nth_tail_lame(n-1,xs))
 
 (* f(f(f(f...(x)))) *)
-fun n_times(f,n,x) =
+fun n_times(f,n,x) = (* ('a -> 'a) * int * 'a -> 'a *)
     if n = 0
     then x
     else f (n_times(f,n-1,x))
@@ -30,9 +30,21 @@ val x1 = n_times(double,4,7)
 val x2 = n_times(increment,4,7)
 val x3 = n_times(tl,2,[4,8,12,16])
 
-fun addition(n,x) = n_times(increment,n,x)
-fun double_n_times(n,x) = n_times(double,n,x)
-fun nth_tail(n,x) = n_times(tl,n,x)
+fun addition(n,x) = n_times(increment,n,x)    (* instantiates 'a with int *)
+fun double_n_times(n,x) = n_times(double,n,x) (* instantiates 'a with int *)
+fun nth_tail(n,x) = n_times(tl,n,x)           (* instantiates 'a with int list *)
 
 fun triple x = 3*x
 fun triple_n_times(n,x) = n_times(triple,n,x)
+
+(* 
+    higher-order functions are often polymorphic based on "whatever" type
+    of function is passed" but not always
+*)
+fun times_until_zero (f,x) =
+    if x=0 then 0 else 1 + times_until_zero(f, f x)
+
+fun len xs =
+    case xs of
+          []     => 0
+        | _::xs' => 1 + len xs'
