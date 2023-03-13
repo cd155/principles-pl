@@ -48,3 +48,17 @@ fun len xs =
     case xs of
           []     => 0
         | _::xs' => 1 + len xs'
+
+fun triple_n_times' (n,x) = n_times(fn x => 3*x,n,x)
+
+(* fun triple x = 3*x *)
+(* fun triple is syntactic sugar of val triple, as long as fun triple not use recursion *)
+val triple' = fn y => 3*y
+
+val triple_n_times'' = fn (n,x) => n_times(fn y => 3*y,n,x)
+
+(* 
+    fun rev xs = List.rev xs
+    val rev = fn xs => List.rev xs 
+*)
+val rev = List.rev
