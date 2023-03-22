@@ -47,3 +47,10 @@ fun other_curry f x y = f y x
 
 fun range' (i,j) = if i > j then [] else i:: range(i+1) j
 val countup' = curry range' 1
+
+(* reference *)
+val x = ref 42
+val y = ref 42
+val z = x
+val _ = x := 43 (* change the content that x point to *)
+val w = (!y) + (!z)
