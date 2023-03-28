@@ -35,3 +35,14 @@ datatype typ = Anything
 	     | Datatype of string
 
 (**** you can put all your code here ****)
+(* 1 *)
+fun other_curry f x y = f (y,x)
+val only_capitals = List.filter (Char.isUpper o (other_curry String.sub 0))
+
+(* 2 *)
+val longest_string1 =
+    foldl (fn (x, acc) => if (String.size x > String.size acc) then x else acc) ""
+
+(* 3 *)
+val longest_string2 =
+    foldl (fn (x, acc) => if (String.size x >= String.size acc) then x else acc) ""
