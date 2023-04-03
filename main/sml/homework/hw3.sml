@@ -52,14 +52,16 @@ fun all_answers f xs =
           end
 
 
-datatype pattern = Wildcard
+datatype pattern = 
+    Wildcard
   | Variable of string
   | UnitP
   | ConstP of int
   | TupleP of pattern list
   | ConstructorP of string * pattern
 
-datatype valu = Const of int
+datatype valu = 
+    Const of int
   | Unit
   | Tuple of valu list
   | Constructor of string * valu
@@ -85,8 +87,39 @@ datatype typ = Anything
   | Datatype of string
 
 (* 9 *)
+val count_wildcards = g (fn _ => 1) (fn _ => 0) 
 
+val count_wild_and_variable_lengths = g (fn _ => 1) (fn x => String.size x)
+
+fun count_some_var (str, p) = g (fn _ => 0) (fn x => if x = str then 1 else 0) p
 
 (* 10 *)
+fun all_str_variable p =
+  case p of
+        Variable x => [x]
+      | TupleP ps => List.foldl (fn (x,acc) => (all_str_variable x) @ acc) [] ps
+      | ConstructorP(_,p) => all_str_variable p
+      | _ => []
+
+fun uni lst = 
+  case lst of 
+      [] => true
+    | (x::xs) => not (List.exists (fn x' => x' = x) xs) andalso (uni xs)
+
+val check_pat = uni o all_str_variable
+
 (* 11 *)
+fun match (v,p) = 
+  case (v,p) of
+      (Unit, UnitP) => SOME []
+    | (Const x, ConstP y) => 
+        if (x = y) then SOME [("ConstP",Const x)] else SOME []
+    | (Tuple x', TupleP y') => all_answers match (ListPair.zip (x',y'))
+    | (Constructor (a,b), ConstructorP (a',b')) =>
+        if (a = a') then match(b,b') else NONE
+    | _ => NONE
+
 (* 12 *)
+fun first_match v ps = 
+  SOME (first_answer match (map (fn x => (v,x)) ps))
+  handle NoAnswer => NONE
